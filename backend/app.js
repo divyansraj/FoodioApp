@@ -23,8 +23,14 @@ app.use(
 //importing all the routes here
 
 const food= require('./routes/food')
+const user =require('./routes/user')
 
 app.use('/api/food',food);
+app.use('/api/user',user);
+
+
+
+
 app.get("/", (req, res) => {
   res.send("Hello Server");
 });
