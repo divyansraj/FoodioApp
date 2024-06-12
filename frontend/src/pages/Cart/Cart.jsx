@@ -35,7 +35,7 @@ const Cart = () => {
                 className="flex flex-col md:flex-row items-center bg-white shadow-md rounded-lg mb-4 p-4"
               >
                 <img
-                  src={item.image}
+                  src={item.image.secure_url}
                   alt="food-item"
                   className="w-full md:w-32 h-32 object-cover rounded-md mb-4 md:mb-0"
                 />

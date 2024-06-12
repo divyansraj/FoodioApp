@@ -1,22 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { assets } from "../../assets/assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setisLoggedIn } from "../../utils/AuthSlice";
+import { setToken, setisLoggedIn } from "../../utils/AuthSlice";
 
 const Navbar = () => {
   const [underline, setUnderline] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const total = useSelector((store) => store.menu.total);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
+  const total = useSelector((store) => store.menu.total);
+  const token = useSelector((store) => store.auth.token);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const tokenFromStorage = localStorage.getItem("token");
+    if (tokenFromStorage) {
+      dispatch(setToken(tokenFromStorage));
+    }
+  }, [dispatch]);
+
+  const Logout = () => {
+    localStorage.removeItem("token");
+    dispatch(setToken("")); // Clear token in Redux store
+    dispatch(setisLoggedIn(false)); // Update isLoggedIn in Redux store
+    navigate("/");
+  };
+
   const handleClick = () => {
     dispatch(setisLoggedIn(true));
   };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const toggleProfileMenu = () => {
+    setIsProfileMenuOpen(!isProfileMenuOpen);
   };
 
   return (
@@ -66,7 +88,7 @@ const Navbar = () => {
             </a>
           </ul>
 
-          <div className="flex items-center gap-5">
+          <div className="relative flex items-center gap-5">
             <img
               src={assets.search_icon}
               alt="Search"
@@ -88,12 +110,46 @@ const Navbar = () => {
                 )}
               </div>
             </Link>
-            <button
-              onClick={handleClick}
-              className="py-2 px-4 text-white font-semibold bg-[#f54748] rounded-md border-2 border-stone-200 duration-100 hover:border-zinc-600"
-            >
-              Sign in
-            </button>
+            {!token ? (
+              <button
+                onClick={handleClick}
+                className="py-2 px-4 text-white font-semibold bg-[#f54748] rounded-md border-2 border-stone-200 duration-100 hover:border-zinc-600"
+              >
+                Sign in
+              </button>
+            ) : (
+              <div className="relative">
+                <img
+                  src={assets.profile_icon}
+                  alt="Profile"
+                  onClick={toggleProfileMenu}
+                  className="cursor-pointer"
+                />
+                {isProfileMenuOpen && (
+                  <ul className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
+                    <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      <img
+                        src={assets.bag_icon}
+                        alt="Orders"
+                        className="w-5 h-5"
+                      />
+                      <Link to={"/orders"}>Orders</Link>
+                    </li>
+                    <li
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={Logout}
+                    >
+                      <img
+                        src={assets.logout_icon}
+                        alt="Logout"
+                        className="w-5 h-5"
+                      />
+                      <span>Logout</span>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -173,15 +229,49 @@ const Navbar = () => {
                 )}
               </div>
             </Link>
-            <button
-              onClick={() => {
-                handleClick();
-                setIsMobileMenuOpen(false);
-              }}
-              className="py-2 px-4 text-white font-semibold bg-[#f54748] rounded-md border-2 border-stone-200 duration-100 hover:border-zinc-600"
-            >
-              Sign in
-            </button>
+            {!token ? (
+              <button
+                onClick={() => {
+                  handleClick();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="py-2 px-4 text-white font-semibold bg-[#f54748] rounded-md border-2 border-stone-200 duration-100 hover:border-zinc-600"
+              >
+                Sign in
+              </button>
+            ) : (
+              <div className="relative">
+                <img
+                  src={assets.profile_icon}
+                  alt="Profile"
+                  onClick={toggleProfileMenu}
+                  className="cursor-pointer"
+                />
+                {isProfileMenuOpen && (
+                  <ul className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
+                    <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      <img
+                        src={assets.bag_icon}
+                        alt="Orders"
+                        className="w-5 h-5"
+                      />
+                      <Link to={"/orders"}>Orders</Link>
+                    </li>
+                    <li
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={Logout}
+                    >
+                      <img
+                        src={assets.logout_icon}
+                        alt="Logout"
+                        className="w-5 h-5"
+                      />
+                      <span>Logout</span>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

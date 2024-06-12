@@ -23,7 +23,7 @@ const FoodItem = ({ item }) => {
     <div className="max-w-xs w-full bg-white shadow-md rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 m-2">
       <div className="w-full h-48 relative">
         <img
-          src={item.image}
+          src={item.image.secure_url}
           alt={item.name}
           className="w-full h-full object-cover"
         />

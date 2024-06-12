@@ -1,21 +1,31 @@
 //import React from "react";
 import { useSelector } from "react-redux";
 import FoodItem from "../FoodItem/FoodItem";
-import {  food_list } from "../../assets/assets";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { myURL } from "../../utils/constants";
 
 
 const FoodDisplay = () => {
   const category = useSelector((store) => store.foodcategory.selectedCategory);
   const total = useSelector((store) => store.menu.total)
-  console.log(total)
-
+  const [food,setFood]=useState([]);
+  const fetchFood = async() => {
+    const response = await axios.get(myURL + "/api/food/allfooditems");
+    setFood(response.data.food);
+  }
+  
+  useEffect(() => {
+    fetchFood();
+  },[])
+  console.log(food);
   return (
     <div className="container mx-auto px-5 py-10 relative" id="food-display">
       <div className="max-w-[1280px] mx-auto relative">
         <h1 className="font-medium text-2xl mb-5">Top dishes near you</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {food_list
+          {food
             .filter((item) => category === "All" || item.category === category)
             .map((item) => (
               <div key={item._id}>
