@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { assets } from "../../assets/assets";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setisLoggedIn } from "../../utils/AuthSlice";
+import { StoreContext } from "../../context/StoreContext";
 
 const Navbar = () => {
+  const { getTotalCartValues } = useContext(StoreContext);
+  const { totalCartItems } = getTotalCartValues();
   const [underline, setUnderline] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -103,9 +106,9 @@ const Navbar = () => {
                   onClick={() => setUnderline("cart")}
                   className={underline === "cart" ? "active" : ""}
                 />
-                {total > 0 && (
+                {totalCartItems > 0 && (
                   <span className="absolute -top-3 -right-1 bg-green-400 rounded-full px-2">
-                    {total}
+                    {totalCartItems}
                   </span>
                 )}
               </div>

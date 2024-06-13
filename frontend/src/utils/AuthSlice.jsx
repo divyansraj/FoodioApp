@@ -4,7 +4,7 @@ const AuthSlice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
-    token: localStorage.getItem("token") || "",
+    token: "",
   },
   reducers: {
     setisLoggedIn: (state, action) => {

@@ -1,8 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
+import { StoreContext } from "../../context/StoreContext";
 
 const PlaceOrder = () => {
+  const { cartItems, food_list, getTotalCartValues } = useContext(StoreContext);
+
+  const { totalAmount, totalCartItems } = getTotalCartValues();
   const foodItems = useSelector((store) => store.menu.items);
   const totalPrice = useSelector((store) => store.menu.totalAmount);
   return (
@@ -64,16 +68,20 @@ const PlaceOrder = () => {
         </form>
         <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
           <h1 className="font-semibold text-3xl mb-4">Cart Totals</h1>
-          <div>
-            {foodItems.map((item) => (
+          <div>{
+          totalCartItems>0 ?(
+            <>
+            {food_list.map((item) => {
+              if (cartItems[item._id] > 0) {
+                return (
               <div
-                key={item.id}
+                key={item._id}
                 className="mb-4 p-2 bg-gray-50 rounded-lg shadow-sm"
               >
                 <div className="grid grid-cols-4 gap-4 items-center">
                   <div className="col-span-1">
                     <img
-                      src={item.image}
+                      src={item.image.secure_url}
                       className="w-24 h-24 object-cover rounded"
                       alt={item.name}
                     />
@@ -83,22 +91,28 @@ const PlaceOrder = () => {
                   </div>
                   <div className="col-span-1 text-right">
                     <h1 className="text-lg">${item.price}</h1>
-                    <h1 className="text-lg">x{item.quantity}</h1>
+                    <h1 className="text-lg">x{cartItems[item._id]}</h1>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-          <hr></hr>
+                )}})}
+            <hr></hr>
           <div className="flex justify-between">
             <h1 className=" font-bold text-lg">Total</h1>
-            <h1 className=" font-bold text-lg">${totalPrice}</h1>
+            <h1 className=" font-bold text-lg">${totalAmount}</h1>
           </div>
-          <button
-            className="flex justify-end py-2 px-6 bg-green-500 text-white font-semibold rounded-md hover:bg-green-700 transition duration-200"
-          >
+          <button className="flex justify-end py-2 px-6 bg-green-500 text-white font-semibold rounded-md hover:bg-green-700 transition duration-200">
             Proceed to Payment
           </button>
+          </>
+          ):(
+            
+          <p className="text-center text-xl font-semibold">
+            Your cart is empty.
+          </p>
+        )}
+        </div>
+          
         </div>
       </div>
     </div>

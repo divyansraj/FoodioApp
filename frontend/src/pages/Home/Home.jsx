@@ -6,6 +6,7 @@ import FoodDisplay from '../../components/FoodDisplay/FoodDisplay';
 import Footer from '../../components/Footer/Footer';
 
 const Home = () => {
+  
   return (
     <div>
       <Header />

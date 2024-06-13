@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const FoodMenuSlice = createSlice({
   name: "menu",
   initialState: {
-    items: [], // Ensure items is initialized as an array
+    items: [],
     total: 0,
     totalAmount: 0,
   },
@@ -16,7 +16,7 @@ const FoodMenuSlice = createSlice({
         state.items.push({ ...action.payload, quantity: 1 });
       }
       state.total += 1;
-     state.totalAmount += action.payload.price; // Update totalAmount when adding item
+      state.totalAmount += action.payload.price;
     },
     removeItem: (state, action) => {
       const itemIndex = state.items.findIndex(
@@ -30,7 +30,7 @@ const FoodMenuSlice = createSlice({
           state.items.splice(itemIndex, 1);
         }
         state.total -= 1;
-        state.totalAmount -= item.price; // Update totalAmount when removing item
+        state.totalAmount -= item.price;
       }
     },
     clearCart: (state) => {
@@ -38,9 +38,15 @@ const FoodMenuSlice = createSlice({
       state.total = 0;
       state.totalAmount = 0;
     },
+    setCart: (state, action) => {
+      state.items = action.payload.items;
+      state.total = action.payload.total;
+      state.totalAmount = action.payload.totalAmount;
+    },
   },
 });
 
-export const { addItem, removeItem, clearCart } = FoodMenuSlice.actions;
+export const { addItem, removeItem, clearCart, setCart } =
+  FoodMenuSlice.actions;
 
 export default FoodMenuSlice.reducer;
