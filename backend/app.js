@@ -6,6 +6,22 @@ const app = express();
 const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser");
 
+//allowing cors sharing
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Check if the origin is in the allowed origins list or is undefined (for non-browser requests)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
+
 //middlewares
 app.use(express.json());
 app.use(cors());
@@ -24,9 +40,11 @@ app.use(
 
 const food= require('./routes/food')
 const user =require('./routes/user')
+const cart = require('./routes/cart')
 
 app.use('/api/food',food);
 app.use('/api/user',user);
+app.use('/api/cart',cart);
 
 
 

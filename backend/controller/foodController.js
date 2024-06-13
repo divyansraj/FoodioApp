@@ -61,14 +61,15 @@ exports.getallFoodItems = async (req, res, next) => {
 
 exports.deleteOne = async (req, res, next) => {
   try {
-    const food = await Food.findById(req.params.id);
+    const {id} =req.body;
+    const food = await Food.findById(id);
     if (!food) {
       return next(Error("No user Found"));
     }
     const imageID = food.image.id;
     const photo = await cloudinary.uploader.destroy(imageID);
 
-    const deletedFood = await Food.findByIdAndDelete(req.params.id);
+    const deletedFood = await Food.findByIdAndDelete(id);
 
     res.status(200).json({
       success: true,
@@ -82,3 +83,25 @@ exports.deleteOne = async (req, res, next) => {
     });
   }
 };
+
+exports.getFoodDetails = async(req,res,next)=> {
+  try{
+    const {id} = req.params;
+  const food = await Food.findById(id);
+  if(!food){
+    return next(Error("Food is not present enter correct id"))
+  }
+  res.status(200).json({
+    success: true,
+    food
+  })
+  }
+  catch(error){
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Error"
+    })
+  }
+  
+}

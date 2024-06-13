@@ -27,7 +27,7 @@ const userModel = mongoose.Schema({
   }
 
 },{minimize:false});
-//  the minimize option is a schema option  which will By default, this option is true, which means Mongoose will remove empty objects from the document when it is saved to the database.Setting minimize to false ensures that empty objects are not removed
+//  the minimize option is a schema option  which will By default, this option is true, which means Mongoose will remove empty objects from the document when it is saved to the database.
 
 //Mongoose pre-save middleware. It runs before the save operation is executed on a document.
 userModel.pre("save", async function(next){

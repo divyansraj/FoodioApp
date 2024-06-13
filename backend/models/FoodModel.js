@@ -13,8 +13,7 @@ const foodSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  image: [
-    {
+  image: {
       id: {
         type: String,
         required: true,
@@ -24,7 +23,6 @@ const foodSchema = mongoose.Schema({
         required: true,
       },
     },
-  ],
   description: {
     type: String,
     required: true,

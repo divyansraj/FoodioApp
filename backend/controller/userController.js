@@ -32,6 +32,8 @@ exports.login = async(req,res,next)=> {
             message:"Login Successful"
         })
 
+        console.log(user)
+
     }
     catch(error){
         console.log(error);
@@ -73,6 +75,7 @@ exports.register=async(req,res,next)=> {
             newUser,
             token
         })
+        console.log(newUser)
     }
     catch(error){
         console.log(error);
