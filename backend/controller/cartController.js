@@ -36,7 +36,9 @@ exports.removeFromCart = async(req,res,next)=> {
     if (cartData[req.body.itemId] > 0) {
       cartData[req.body.itemId] -= 1;
     }
-
+    if (cartData[req.body.itemId] == 1 ) {
+      cartData ={};
+    }
     await User.findByIdAndUpdate(req.body.userid, { cartData });
     res.json({
         success: true,

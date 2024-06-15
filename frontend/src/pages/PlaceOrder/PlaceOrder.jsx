@@ -68,51 +68,53 @@ const PlaceOrder = () => {
         </form>
         <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
           <h1 className="font-semibold text-3xl mb-4">Cart Totals</h1>
-          <div>{
-          totalCartItems>0 ?(
-            <>
-            {food_list.map((item) => {
-              if (cartItems[item._id] > 0) {
-                return (
-              <div
-                key={item._id}
-                className="mb-4 p-2 bg-gray-50 rounded-lg shadow-sm"
-              >
-                <div className="grid grid-cols-4 gap-4 items-center">
-                  <div className="col-span-1">
-                    <img
-                      src={item.image.secure_url}
-                      className="w-24 h-24 object-cover rounded"
-                      alt={item.name}
-                    />
-                  </div>
-                  <div className="col-span-2">
-                    <h1 className="text-lg font-semibold">{item.name}</h1>
-                  </div>
-                  <div className="col-span-1 text-right">
-                    <h1 className="text-lg">${item.price}</h1>
-                    <h1 className="text-lg">x{cartItems[item._id]}</h1>
-                  </div>
+          <div>
+            {totalCartItems > 0 ? (
+              <>
+                {food_list.map((item) => {
+                  if (cartItems[item._id] > 0) {
+                    return (
+                      <div
+                        key={item._id}
+                        className="mb-4 p-2 bg-gray-50 rounded-lg shadow-sm"
+                      >
+                        <div className="grid grid-cols-4 gap-4 items-center">
+                          <div className="col-span-1">
+                            <img
+                              src={item.image.secure_url}
+                              className="w-24 h-24 object-cover rounded"
+                              alt={item.name}
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <h1 className="text-lg font-semibold">
+                              {item.name}
+                            </h1>
+                          </div>
+                          <div className="col-span-1 text-right">
+                            <h1 className="text-lg">${item.price}</h1>
+                            <h1 className="text-lg">x{cartItems[item._id]}</h1>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+                })}
+                <hr></hr>
+                <div className="flex justify-between">
+                  <h1 className=" font-bold text-lg">Total</h1>
+                  <h1 className=" font-bold text-lg">${totalAmount}</h1>
                 </div>
-              </div>
-                )}})}
-            <hr></hr>
-          <div className="flex justify-between">
-            <h1 className=" font-bold text-lg">Total</h1>
-            <h1 className=" font-bold text-lg">${totalAmount}</h1>
+                <button className="flex justify-end py-2 px-6 bg-green-500 text-white font-semibold rounded-md hover:bg-green-700 transition duration-200">
+                  Proceed to Payment
+                </button>
+              </>
+            ) : (
+              <p className="text-center text-xl font-semibold">
+                Your cart is empty.
+              </p>
+            )}
           </div>
-          <button className="flex justify-end py-2 px-6 bg-green-500 text-white font-semibold rounded-md hover:bg-green-700 transition duration-200">
-            Proceed to Payment
-          </button>
-          </>
-          ):(
-            
-          <p className="text-center text-xl font-semibold">
-            Your cart is empty.
-          </p>
-        )}
-        </div>
-          
         </div>
       </div>
     </div>

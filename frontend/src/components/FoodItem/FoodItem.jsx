@@ -8,7 +8,7 @@ import axios from "axios";
 import { myURL } from "../../utils/constants";
 import { StoreContext } from "../../context/StoreContext";
 
-const FoodItem = ({ id,name,price,description,image }) => {
+const FoodItem = ({ id, name, price, description, image }) => {
   // const dispatch = useDispatch();
 
   // const token = useSelector((store) => store.auth.token);
@@ -21,7 +21,7 @@ const FoodItem = ({ id,name,price,description,image }) => {
   //       { headers: { token } }
   //     );
   //   }
-    
+
   // };
 
   // const remove = async() => {
@@ -33,8 +33,7 @@ const FoodItem = ({ id,name,price,description,image }) => {
   //       { headers: { token } }
   //     );
   //   }
-    
-    
+
   // };
 
   // const load =async()=> {
@@ -51,12 +50,16 @@ const FoodItem = ({ id,name,price,description,image }) => {
   // );
   // const quantity = cartItem ? cartItem.quantity : 0;
 
-  const {cartItems,addToCart,removeFromCart} = useContext(StoreContext)
+  const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
 
   return (
     <div className="max-w-xs w-full bg-white shadow-md rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 m-2">
       <div className="w-full h-48 relative">
-        <img src={image.secure_url} alt={name} className="w-full h-full object-cover" />
+        <img
+          src={image.secure_url}
+          alt={name}
+          className="w-full h-full object-cover"
+        />
       </div>
 
       <div className="p-4">

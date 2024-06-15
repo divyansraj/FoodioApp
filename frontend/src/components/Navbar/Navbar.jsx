@@ -7,7 +7,7 @@ import { setToken, setisLoggedIn } from "../../utils/AuthSlice";
 import { StoreContext } from "../../context/StoreContext";
 
 const Navbar = () => {
-  const { getTotalCartValues } = useContext(StoreContext);
+  const { getTotalCartValues, setCartItems } = useContext(StoreContext);
   const { totalCartItems } = getTotalCartValues();
   const [underline, setUnderline] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,6 +29,7 @@ const Navbar = () => {
     localStorage.removeItem("token");
     dispatch(setToken("")); // Clear token in Redux store
     dispatch(setisLoggedIn(false)); // Update isLoggedIn in Redux store
+    setCartItems({});
     navigate("/");
   };
 

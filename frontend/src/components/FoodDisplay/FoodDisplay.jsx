@@ -8,14 +8,11 @@ import axios from "axios";
 import { myURL } from "../../utils/constants";
 import { StoreContext } from "../../context/StoreContext";
 
-
 const FoodDisplay = () => {
   const category = useSelector((store) => store.foodcategory.selectedCategory);
-  const { food_list, fetchFoodList, getTotalCartValues } =useContext(StoreContext);
+  const { food_list, fetchFoodList, getTotalCartValues, loadCartItems } =
+    useContext(StoreContext);
   const { totalCartItems } = getTotalCartValues();
-  useEffect(() => {
-    fetchFoodList();
-  },[])
 
   // const total = useSelector((store) => store.menu.total)
   // const [food,setFood]=useState([]);

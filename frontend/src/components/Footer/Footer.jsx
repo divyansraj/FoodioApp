@@ -33,7 +33,7 @@ const Footer = () => {
         <div className="w-full lg:w-auto flex flex-col gap-10">
           <img src={assets.logo_footer} alt="logo" className="w-32" />
           <ul className="text-[#c8c8ca] text-xl font-normal flex flex-col gap-3">
-            <Link to={'/'}>Home</Link>
+            <Link to={"/"}>Home</Link>
             <a href="#explore-menu">Menu</a>
             <a href="#food-display">Order online</a>
             <li>Catering</li>

@@ -3,62 +3,58 @@ import { useDispatch, useSelector } from "react-redux";
 import { assets } from "../../assets/assets";
 import { setToken, setisLoggedIn } from "../../utils/AuthSlice";
 import { myURL } from "../../utils/constants";
-import axios from "axios"
-
+import axios from "axios";
 
 const LoginPopup = () => {
-  
   // const showLoginPopup = useSelector((store) => store.auth.isLoggedIn);
-  
+
   const auth = useSelector((store) => store.auth.token);
-  console.log(auth)
+  console.log(auth);
   const dispatch = useDispatch();
   const [currState, setcurrState] = useState("Sign up");
 
-
-
-  const [data,setData] =useState({
-    name:"",
-    email:"",
-    password:""
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
   });
-  const onSubmitHandler = (e)=>{
-    const name =e.target.name;
+  const onSubmitHandler = (e) => {
+    const name = e.target.name;
     const value = e.target.value;
-    setData((prev)=> ({...prev,[name]:value}))
-  }
-  const login =async(e)=>{
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
+  const login = async (e) => {
     e.preventDefault();
     let response;
-    if(currState === "Login"){
-    response = await axios.post(`${myURL}/api/user/login`, data);
-     }
-    else{
-    response = await axios.post(`${myURL}/api/user/register`, data);
+    if (currState === "Login") {
+      response = await axios.post(`${myURL}/api/user/login`, data);
+    } else {
+      response = await axios.post(`${myURL}/api/user/register`, data);
     }
 
     if (response.data.success) {
       dispatch(setToken(response.data.token));
-      localStorage.setItem("token", response.data.token); 
+      localStorage.setItem("token", response.data.token);
       alert("Success");
       dispatch(setisLoggedIn(false));
     } else {
       alert(response.data.message);
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     console.log(data);
-  },[data])
+  }, [data]);
 
   const handleClick = () => {
     dispatch(setisLoggedIn(false));
   };
 
-
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 mt-10">
-      <form onSubmit={login} className="relative bg-white p-7 rounded-lg w-full max-w-sm mx-4 space-y-6 text-gray-800">
+      <form
+        onSubmit={login}
+        className="relative bg-white p-7 rounded-lg w-full max-w-sm mx-4 space-y-6 text-gray-800"
+      >
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-semibold">{currState}</h1>
           <img
@@ -90,9 +86,9 @@ const LoginPopup = () => {
             required
           />
           <input
-          name="password"
-          value={data.password}
-          onChange={onSubmitHandler}
+            name="password"
+            value={data.password}
+            onChange={onSubmitHandler}
             className="p-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600"
             type="password"
             placeholder="Enter your password"
