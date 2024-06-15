@@ -11,8 +11,7 @@ const LoginPopup = () => {
   const auth = useSelector((store) => store.auth.token);
   console.log(auth);
   const dispatch = useDispatch();
-  const [currState, setcurrState] = useState("Sign up");
-
+  const [currState, setcurrState] = useState("Login")
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -35,7 +34,7 @@ const LoginPopup = () => {
     if (response.data.success) {
       dispatch(setToken(response.data.token));
       localStorage.setItem("token", response.data.token);
-      alert("Success");
+      alert(response.data.message);
       dispatch(setisLoggedIn(false));
     } else {
       alert(response.data.message);

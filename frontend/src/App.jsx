@@ -8,6 +8,9 @@ import Home from "./pages/Home/Home"
 import LoginPopup from "./components/LoginPopup/LoginPopup"
 import { useSelector } from "react-redux"
 import Menu from "./pages/Menu/Menu"
+import Verify from "./pages/Verify/Verify"
+import MyOrders from "./pages/MyOrders/MyOrders"
+import ContactUs from "./pages/Contactus/Contactus"
 
 const App = () => {
   const showLogin = useSelector((store) => store.auth.isLoggedIn);
@@ -21,6 +24,9 @@ const App = () => {
           <Route path="/menu" element={<Menu />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/order" element={<PlaceOrder />}></Route>
+          <Route path="/verify" element={<Verify/>}></Route>
+          <Route path={'myorders'} element={<MyOrders/>}></Route>
+          <Route path={'/contactus'} element={<ContactUs/>}></Route>
         </Routes>
       </div>
     </>

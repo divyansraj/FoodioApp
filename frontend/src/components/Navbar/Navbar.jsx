@@ -69,27 +69,23 @@ const Navbar = () => {
             >
               Menu
             </Link>
-            <a
-              href="#food-display"
-              onClick={() => setUnderline("order-online")}
-              className={underline === "order-online" ? "active" : ""}
-            >
-              Order online
-            </a>
-            <a
-              href="#footer"
+
+            <Link
+              to={"/myorders"}
+              href=""
               onClick={() => setUnderline("about-us")}
               className={underline === "about-us" ? "active" : ""}
             >
-              About us
-            </a>
-            <a
+              My orders
+            </Link>
+            <Link
+              to={"/contactus"}
               href="#footer"
               onClick={() => setUnderline("contact-us")}
               className={underline === "contact-us" ? "active" : ""}
             >
               Contact us
-            </a>
+            </Link>
           </ul>
 
           <div className="relative flex items-center gap-5">
@@ -131,14 +127,16 @@ const Navbar = () => {
                 />
                 {isProfileMenuOpen && (
                   <ul className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-                    <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      <img
-                        src={assets.bag_icon}
-                        alt="Orders"
-                        className="w-5 h-5"
-                      />
-                      <Link to={"/orders"}>Orders</Link>
-                    </li>
+                    <Link to={"/myorders"}>
+                      <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        <img
+                          src={assets.bag_icon}
+                          alt="Orders"
+                          className="w-5 h-5"
+                        />
+                        Orders
+                      </li>
+                    </Link>
                     <li
                       className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
                       onClick={Logout}
