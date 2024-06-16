@@ -81,7 +81,6 @@ exports.verifyOrder = async(req,res,next)=> {
 }
 
 //user myorders
-
 exports.myOrders = async(req,res,next) => {
     try{
         const { userid } = req.body;
@@ -102,7 +101,48 @@ exports.myOrders = async(req,res,next) => {
         });
 
     }
-    }
+}
 
+
+//admin all orders
+
+exports.allorders = async(req,res) => {
+    
+    try{
+        const orders = await Order.find({});
+        console.log(orders);
+        res.json({
+          success: true,
+          message: "All Orders",
+          orders,
+        });
+    }
+    catch(error){
+        console.log(error);
+        res.json({
+            success:false,
+            message:"Error"
+        })
+    }
+}
+
+//api updating order status
+
+exports.updateStatus= async(req,res) => {
+    try{
+        await Order.findByIdAndUpdate(req.body.orderId,{status : req.body.status})
+        res.json({
+            success:true,
+            message:"Status Updated"
+        })
+    }
+    catch(error){
+        console.log(error)
+        res.json({
+            success:false,
+            message:"Error"
+        })
+    }
+}
 
 

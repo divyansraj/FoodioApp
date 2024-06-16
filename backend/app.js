@@ -3,13 +3,19 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
+
+
 const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser");
 
 //middlewares
 app.use(express.json());
 app.use(cors());
-
+app.use(
+  cors({
+    origin: ["http://localhost:5174", "http://localhost:5173"],
+  })
+);
 
 //cookie and file middlewares
 app.use(cookieParser());
