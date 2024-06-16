@@ -34,14 +34,18 @@ const StoreContextProvider = (props) => {
   };
 
   const removeFromCart = async (itemId) => {
+
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
     if (token) {
       await axios.post(myURL + "/api/cart/delete",{ itemId: itemId },{ headers: { token } });
     }
   };
 
-  const clearCart = () => {
+  const clearCart = async() => {
     setCartItems({});
+    if(token) {
+      await axios.post(myURL + "/api/cart/clearcart",{},{ headers: {token}});
+    }
   };
 
   const getTotalCartValues = () => {

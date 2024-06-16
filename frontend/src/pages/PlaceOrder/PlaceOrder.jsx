@@ -61,110 +61,112 @@ const PlaceOrder = () => {
   return (
     <div className="pt-32 px-4 md:px-8 bg-gray-100 min-h-screen">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
-        <form
-          onSubmit={placeOrder}
-          className="flex flex-col gap-6 w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md"
-        >
-          <h1 className="font-semibold text-3xl mb-4">Delivery Information</h1>
-          <div className="flex flex-col md:flex-row gap-4">
-            <input
-              required
-              name="firstName"
-              onChange={onChangeHandler}
-              value={data.firstName}
-              type="text"
-              placeholder="First name"
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
-            />
-            <input
-              required
-              name="lastName"
-              onChange={onChangeHandler}
-              value={data.lastName}
-              type="text"
-              placeholder="Last name"
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
-            />
-          </div>
-          <input
-            required
-            name="email"
-            onChange={onChangeHandler}
-            value={data.email}
-            type="email"
-            placeholder="Email address"
-            className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600"
-          />
-          <input
-            required
-            name="street"
-            onChange={onChangeHandler}
-            value={data.street}
-            type="text"
-            placeholder="Street"
-            className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600"
-          />
-          <div className="flex flex-col md:flex-row gap-4">
-            <input
-              required
-              name="city"
-              onChange={onChangeHandler}
-              value={data.city}
-              type="text"
-              placeholder="City"
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
-            />
-            <input
-              required
-              name="state"
-              onChange={onChangeHandler}
-              value={data.state}
-              type="text"
-              placeholder="State"
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
-            />
-          </div>
-          <div className="flex flex-col md:flex-row gap-4">
-            <input
-              required
-              name="zipCode"
-              onChange={onChangeHandler}
-              value={data.zipCode}
-              type="text"
-              placeholder="Zip code"
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
-            />
-            <input
-              required
-              name="country"
-              onChange={onChangeHandler}
-              value={data.country}
-              type="text"
-              placeholder="Country"
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
-            />
-          </div>
-          <input
-            required
-            name="phone"
-            onChange={onChangeHandler}
-            value={data.phone}
-            type="text"
-            placeholder="Phone"
-            className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600"
-          />
-          <button
-            type="submit"
-            className="text-center py-2 px-6 bg-green-500 text-white font-semibold rounded-md hover:bg-green-700 transition duration-200"
-          >
-            Proceed to Payment
-          </button>
-        </form>
-        <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
-          <h1 className="font-semibold text-3xl mb-4">Cart Totals</h1>
-          <div>
-            {totalCartItems > 0 ? (
-              <>
+        {totalCartItems > 0 ? (
+          <>
+            <form
+              onSubmit={placeOrder}
+              className="flex flex-col gap-6 w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md"
+            >
+              <h1 className="font-semibold text-3xl mb-4">
+                Delivery Information
+              </h1>
+              <div className="flex flex-col md:flex-row gap-4">
+                <input
+                  required
+                  name="firstName"
+                  onChange={onChangeHandler}
+                  value={data.firstName}
+                  type="text"
+                  placeholder="First name"
+                  className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
+                />
+                <input
+                  required
+                  name="lastName"
+                  onChange={onChangeHandler}
+                  value={data.lastName}
+                  type="text"
+                  placeholder="Last name"
+                  className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
+                />
+              </div>
+              <input
+                required
+                name="email"
+                onChange={onChangeHandler}
+                value={data.email}
+                type="email"
+                placeholder="Email address"
+                className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600"
+              />
+              <input
+                required
+                name="street"
+                onChange={onChangeHandler}
+                value={data.street}
+                type="text"
+                placeholder="Street"
+                className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600"
+              />
+              <div className="flex flex-col md:flex-row gap-4">
+                <input
+                  required
+                  name="city"
+                  onChange={onChangeHandler}
+                  value={data.city}
+                  type="text"
+                  placeholder="City"
+                  className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
+                />
+                <input
+                  required
+                  name="state"
+                  onChange={onChangeHandler}
+                  value={data.state}
+                  type="text"
+                  placeholder="State"
+                  className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row gap-4">
+                <input
+                  required
+                  name="zipCode"
+                  onChange={onChangeHandler}
+                  value={data.zipCode}
+                  type="text"
+                  placeholder="Zip code"
+                  className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
+                />
+                <input
+                  required
+                  name="country"
+                  onChange={onChangeHandler}
+                  value={data.country}
+                  type="text"
+                  placeholder="Country"
+                  className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600 w-full"
+                />
+              </div>
+              <input
+                required
+                name="phone"
+                onChange={onChangeHandler}
+                value={data.phone}
+                type="text"
+                placeholder="Phone"
+                className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-600"
+              />
+              <button
+                type="submit"
+                className="text-center py-2 px-6 bg-green-500 text-white font-semibold rounded-md hover:bg-green-700 transition duration-200"
+              >
+                Proceed to Payment
+              </button>
+            </form>
+            <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+              <h1 className="font-semibold text-3xl mb-4">Cart Totals</h1>
+              <div>
                 {food_list.map((item) => {
                   if (cartItems[item._id] > 0) {
                     return (
@@ -199,14 +201,14 @@ const PlaceOrder = () => {
                   <h1 className="font-bold text-lg">Total</h1>
                   <h1 className="font-bold text-lg">${totalAmount}</h1>
                 </div>
-              </>
-            ) : (
-              <p className="text-center text-xl font-semibold">
-                Your cart is empty.
-              </p>
-            )}
-          </div>
-        </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <p className="text-center text-xl font-semibold">
+            Your cart is empty.
+          </p>
+        )}
       </div>
     </div>
   );
