@@ -1,0 +1,1 @@
+export const myURL = "http://localhost:4000";

@@ -20,7 +20,7 @@ const Add = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    const formData = new FormData(); // Automatically handles file inputs and encodes the data in a format suitable for multipart/form-data.
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("price", data.price);
