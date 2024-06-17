@@ -2,8 +2,10 @@ require("dotenv").config()
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const path = require("path");
 
-
+const helmet = require("helmet");
+const morgan = require("morgan");
 
 const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser");
@@ -16,15 +18,27 @@ app.use(
     origin: ["http://localhost:5174", "http://localhost:5173"],
   })
 );
+// Use Helmet with CSP middleware
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'none'"],
+      fontSrc: ["'self'", "data:"],
+    },
+  })
+);
+
+// Morgan middleware
+app.use(morgan("tiny"));
 
 //cookie and file middlewares
 app.use(cookieParser());
 app.use(
-    fileUpload({
-      useTempFiles: true,
-      tempFileDir: "/temp/",
-    })
-  );
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: path.join("/tmp"), // Use the writable directory provided by the platform
+  })
+);
 
 //importing all the routes here
 
