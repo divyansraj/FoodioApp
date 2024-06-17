@@ -1,5 +1,5 @@
 const express = require('express');
-const { placeOrder, verifyOrder, myOrders, allorders, updateStatus } = require('../controller/orderCOntroller');
+const { placeOrder, verifyOrder, myOrders, allorders, updateStatus } = require('../controller/orderController');
 const isLoggedin = require('../middlewares/isLoggedin');
 const router = express.Router();
 
