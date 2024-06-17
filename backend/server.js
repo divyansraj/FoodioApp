@@ -1,30 +1,40 @@
 require("dotenv").config();
-const cloudinary = require('cloudinary');
+const cloudinary = require("cloudinary").v2;
 const cors = require("cors");
-const app= require('./app')
+const app = require("./app");
+const connectDB = require("./config/db");
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
-app.use(cors());
+// CORS configuration
 app.use(
   cors({
     origin: ["http://localhost:5174", "http://localhost:5173"],
   })
 );
 
-//connecting to database
-const connectDB = require('./config/db');
-connectDB();
+// Connect to database with error handling
+connectDB()
+  .then(() => {
+    console.log("Connected to MongoDB");
 
-//configuring cloudinary
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_APIKEY,
-  api_secret: process.env.CLOUD_API_SECRETKEY,
-});
+    // Configure Cloudinary with error handling
+    try {
+      cloudinary.config({
+        cloud_name: process.env.CLOUD_NAME,
+        api_key: process.env.CLOUD_APIKEY,
+        api_secret: process.env.CLOUD_API_SECRETKEY,
+      });
+      console.log("Cloudinary configured successfully");
+    } catch (error) {
+      console.error("Error configuring Cloudinary:", error.message);
+    }
 
-app.listen(port,()=>{
-    console.log(`server is running at http://localhost:${port}`)
-})
-
-// mongodb+srv://divyanshuww:WVGmGjGPWEx9h6x5@cluster0.hi2pr4k.mongodb.net/?
+    // Start the server
+    app.listen(port, () => {
+      console.log(`Server is running at http://localhost:${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error.message);
+  });

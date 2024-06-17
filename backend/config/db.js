@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 const connectDB = async()=> {
     try{
-        await mongoose.connect(
-          "mongodb+srv://divyanshuww:WVGmGjGPWEx9h6x5@cluster0.hi2pr4k.mongodb.net/food-app"
-        );
+        await mongoose.connect(process.env.DB_URL)
         console.log("DataBase Connected Successfully");
     }
     
