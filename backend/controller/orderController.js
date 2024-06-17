@@ -6,7 +6,8 @@ const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 exports.placeOrder = async(req,res,next)=>{
-    
+    // const frontend_url = "http://localhost:5173";
+    const frontend_url = "https://foodio-app-yzyz.vercel.app/";
     try{
         const newOrder = new Order({
           userId: req.body.userid,
@@ -33,8 +34,8 @@ exports.placeOrder = async(req,res,next)=>{
         const session = await stripe.checkout.sessions.create({
           line_items: line_items,
           mode: "payment",
-          success_url: `${process.env.FRONTENDURL}/verify?success=true&orderId=${newOrder._id}`,
-          cancel_url: `${process.env.FRONTENDURL}/verify?success=false&orderId=${newOrder._id}`,
+          success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
+          cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
         });
 
         res.json({

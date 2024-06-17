@@ -12,7 +12,7 @@ const corsOptions = {
     "http://localhost:5174",
     "http://localhost:5173",
     "https://foodio-app-yzyz.vercel.app",
-    "https://foodio-app-admin.vercel.app",
+    "https://foodio-app-admin.vercel.app"
   ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
@@ -34,7 +34,7 @@ cloudinary.config({
 });
 
 app.listen(port,()=>{
-    console.log(`server is running at ${process.env.BACKEND_URL}`);
+    console.log(`server is running at http://localhost${port}`)
 })
 
 // mongodb+srv://divyanshuww:WVGmGjGPWEx9h6x5@cluster0.hi2pr4k.mongodb.net/?
