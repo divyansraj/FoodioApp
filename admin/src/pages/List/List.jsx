@@ -2,9 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { toast } from "react-toastify";
+import { myURL } from "../../utils/constant";
 
 const List = () => {
-  const myURL = "http://localhost:4000";
+  //const myURL = "http://localhost:4000";
   const [list, setList] = useState([]);
 
   const items = async () => {
@@ -26,7 +27,7 @@ const List = () => {
 
   const removefooditem = async (foodId) => {
     try {
-      const response = await axios.delete(`${myURL}/api/food/delete`, {
+      const response = await axios.delete(myURL+"/api/food/delete", {
         data: { id: foodId }, 
       });
       await items();

@@ -18,6 +18,7 @@ const corsOptions = {
     "http://localhost:5174",
     "http://localhost:5173",
     "https://foodio-app-yzyz.vercel.app",
+    "https://foodio-app-admin.vercel.app",
   ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
