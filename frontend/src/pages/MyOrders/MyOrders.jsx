@@ -82,32 +82,43 @@ const MyOrders = () => {
                         {item.address.state} {item.address.zipCode}
                       </p>
                     </div>
-                    <div className="flex flex-col gap-5 mt-4 md:mt-0">
-                      <h3 className="text-lg font-medium text-gray-700">
-                        Order Status
-                      </h3>
-                      <p className="text-indigo-600">{item.status}</p>
-                      <div>
-                        {item.status == "Delivered" ? (
-                          <></>
-                        ) : (
-                          <button
-                            onClick={refreshStatus}
-                            className="p-2 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-700 transition duration-200"
-                          >
-                            Track Order
-                          </button>
-                        )}
+                    {item.payment ? (
+                      <div className="flex flex-col gap-5 mt-4 md:mt-0">
+                        <h3 className="text-lg font-medium text-gray-700">
+                          Order Status
+                        </h3>
+                        <p className="text-indigo-600">{item.status}</p>
+                        <div>
+                          {item.status == "Delivered" ? (
+                            <></>
+                          ) : (
+                            <button
+                              onClick={refreshStatus}
+                              className="p-2 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-700 transition duration-200"
+                            >
+                              Track Order
+                            </button>
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                   <div className="flex justify-between items-center mt-4">
                     <h3 className="text-lg font-medium text-gray-700">
-                      Total Quantity: {item.items.length}
+                      Total Quantity: {item.items.length} Total Amount: $
+                      {item.amount}
                     </h3>
-                    <h3 className="text-lg font-medium text-gray-700">
-                      Total Paid: ${item.amount}
-                    </h3>
+                    {item.payment ? (
+                      <h3 className="text-lg font-medium text-gray-700">
+                        Total Paid: ${item.amount}
+                      </h3>
+                    ) : (
+                      <h3 className="text-lg font-medium text-gray-700">
+                        Payment Failed
+                      </h3>
+                    )}
                   </div>
                 </div>
               ))}

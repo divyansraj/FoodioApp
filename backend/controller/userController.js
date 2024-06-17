@@ -82,3 +82,22 @@ exports.register=async(req,res,next)=> {
         res.send(error);
     }
 }
+
+exports.getUserDetails =async(req,res,next) => {
+    try{
+        const user = await User.findById(req.body.userid);
+        user.password = undefined;
+        res.json({
+        success:true,
+        user
+    })
+    }
+    catch(error){
+        console.log(error);
+        res.json({
+            success:false,
+            message:"Error"
+        })
+    }
+    
+}

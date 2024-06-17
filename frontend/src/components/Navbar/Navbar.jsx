@@ -1,10 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import { assets } from "../../assets/assets";
 import { Link, useNavigate } from "react-router-dom";
+import { RiUserSmileFill } from "react-icons/ri";
+import { MdMarkEmailUnread } from "react-icons/md";
+import { BsFillCartCheckFill } from "react-icons/bs";
+import { IoLogOut } from "react-icons/io5";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setisLoggedIn } from "../../utils/AuthSlice";
 import { StoreContext } from "../../context/StoreContext";
+import axios from "axios";
+import { myURL } from "../../utils/constants";
 
 const Navbar = () => {
   const { getTotalCartValues, setCartItems } = useContext(StoreContext);
@@ -22,13 +28,33 @@ const Navbar = () => {
     const tokenFromStorage = localStorage.getItem("token");
     if (tokenFromStorage) {
       dispatch(setToken(tokenFromStorage));
+      
     }
   }, [dispatch]);
+
+
+  //getting user details
+  const [loginUser,setLoginUser] = useState({});
+
+  const useDetails =async()=> {
+    const response = await axios.post(myURL + "/api/user/userdetails", {},{headers : {token}});
+    if(response.data.success){
+      console.log(response.data)
+      setLoginUser(response.data.user);
+    }
+  }
+
+    useEffect(() => {
+      if (token) {
+        useDetails();
+      }
+    },[token]);
 
   const Logout = () => {
     localStorage.removeItem("token");
     dispatch(setToken("")); // Clear token in Redux store
     dispatch(setisLoggedIn(false)); // Update isLoggedIn in Redux store
+    setLoginUser({})
     setCartItems({});
     navigate("/");
   };
@@ -118,39 +144,40 @@ const Navbar = () => {
                 Sign in
               </button>
             ) : (
-              <div className="relative">
-                <img
-                  src={assets.profile_icon}
-                  alt="Profile"
-                  onClick={toggleProfileMenu}
-                  className="cursor-pointer"
-                />
-                {isProfileMenuOpen && (
-                  <ul className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-                    <Link to={"/myorders"}>
-                      <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                        <img
-                          src={assets.bag_icon}
-                          alt="Orders"
-                          className="w-5 h-5"
-                        />
-                        Orders
+              <>
+                <div>{loginUser.name}</div>
+                <div className="relative">
+                  <img
+                    src={assets.profile_icon}
+                    alt="Profile"
+                    onClick={toggleProfileMenu}
+                    className="cursor-pointer"
+                  />
+                  {isProfileMenuOpen && (
+                    <ul className="absolute right-0 mt-2 w-50 bg-white rounded-md shadow-lg">
+                      <li className="flex gap-2 px-4 py-2 items-center cursor-text">
+                        <RiUserSmileFill />
+                        {loginUser.name}
                       </li>
-                    </Link>
-                    <li
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={Logout}
-                    >
-                      <img
-                        src={assets.logout_icon}
-                        alt="Logout"
-                        className="w-5 h-5"
-                      />
-                      <span>Logout</span>
-                    </li>
-                  </ul>
-                )}
-              </div>
+                      <li className="flex gap-2 px-4 py-2 items-center cursor-text ">
+                        <MdMarkEmailUnread />
+                        {loginUser.email}
+                      </li>
+                      <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        <BsFillCartCheckFill />
+                        <Link to={"/myorders"}>Orders</Link>
+                      </li>
+                      <li
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={Logout}
+                      >
+                        <IoLogOut />
+                        <span>Logout</span>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -177,8 +204,8 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <a
-              href="#explore-menu"
+            <Link
+              to={"/menu"}
               onClick={() => {
                 setUnderline("menu");
                 setIsMobileMenuOpen(false);
@@ -186,41 +213,10 @@ const Navbar = () => {
               className={underline === "menu" ? "active" : ""}
             >
               Menu
-            </a>
-            <a
-              href="#food-display"
-              onClick={() => {
-                setUnderline("order-online");
-                setIsMobileMenuOpen(false);
-              }}
-              className={underline === "order-online" ? "active" : ""}
-            >
-              Order online
-            </a>
-            <a
-              href="#footer"
-              onClick={() => {
-                setUnderline("about-us");
-                setIsMobileMenuOpen(false);
-              }}
-              className={underline === "about-us" ? "active" : ""}
-            >
-              About us
-            </a>
-            <a
-              href="#footer"
-              onClick={() => {
-                setUnderline("contact-us");
-                setIsMobileMenuOpen(false);
-              }}
-              className={underline === "contact-us" ? "active" : ""}
-            >
-              Contact us
-            </a>
+            </Link>
           </ul>
 
           <div className="flex flex-col items-center gap-5">
-            <img src={assets.search_icon} alt="Search" className="w-6 h-6" />
             <Link to={"/cart"} onClick={() => setIsMobileMenuOpen(false)}>
               <div className="relative p-2">
                 <img src={assets.bag_icon} alt="Cart" className="w-6 h-6" />
@@ -242,36 +238,39 @@ const Navbar = () => {
                 Sign in
               </button>
             ) : (
-              <div className="relative">
-                <img
-                  src={assets.profile_icon}
-                  alt="Profile"
-                  onClick={toggleProfileMenu}
-                  className="cursor-pointer"
-                />
-                {isProfileMenuOpen && (
-                  <ul className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-                    <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      <img
-                        src={assets.bag_icon}
-                        alt="Orders"
-                        className="w-5 h-5"
-                      />
-                      <Link to={"/orders"}>Orders</Link>
-                    </li>
-                    <li
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={Logout}
-                    >
-                      <img
-                        src={assets.logout_icon}
-                        alt="Logout"
-                        className="w-5 h-5"
-                      />
-                      <span>Logout</span>
-                    </li>
-                  </ul>
-                )}
+              <div className="flex gap-5">
+                <div>{loginUser.name}</div>
+                <div className="relative">
+                  <img
+                    src={assets.profile_icon}
+                    alt="Profile"
+                    onClick={toggleProfileMenu}
+                    className="cursor-pointer"
+                  />
+                  {isProfileMenuOpen && (
+                    <ul className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
+                      <li className="flex gap-2 px-4 py-2 items-center cursor-text">
+                        <RiUserSmileFill />
+                        {loginUser.name}
+                      </li>
+                      <li className="flex gap-2 px-4 py-2 items-center cursor-text ">
+                        <MdMarkEmailUnread />
+                        {loginUser.email}
+                      </li>
+                      <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        <BsFillCartCheckFill />
+                        <Link to={"/myorders"}>Orders</Link>
+                      </li>
+                      <li
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={Logout}
+                      >
+                        <IoLogOut />
+                        <span>Logout</span>
+                      </li>
+                    </ul>
+                  )}
+                </div>
               </div>
             )}
           </div>
